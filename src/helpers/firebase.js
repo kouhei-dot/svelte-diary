@@ -1,15 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider } from "firebase/auth";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { userId } from "../store";
+import Cookies from 'js-cookie';
+import { writable } from "svelte/store";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APP_ID,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -24,7 +26,8 @@ export const googleSignIn = () => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     // The signed-in user info.
-    const user = result.user;
+    userId.set(result.user.uid);
+    Cookies.set('uid', result.user.uid);
     // ...
   }).catch((error) => {
     // Handle Errors here.
@@ -35,5 +38,16 @@ export const googleSignIn = () => {
     // The AuthCredential type that was used.
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
+  });
+};
+
+export const googleSignOut = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    Cookies.remove('uid');
+    location.reload();
+  }).catch((error) => {
+    // An error happened.
   });
 };
