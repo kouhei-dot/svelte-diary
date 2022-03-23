@@ -1,7 +1,6 @@
 <script>
   import 'smelte/src/tailwind.css';
   import { Route, Router } from 'svelte-routing';
-  import Button from 'smelte/src/components/Button';
   import Header from './components/Header.svelte'
   import Footer from './components/Footer.svelte'
   import Home from './components/Home.svelte';
@@ -23,7 +22,6 @@
       <Route path="/">
         <Home />
       </Route>
-      <Button class="bg-accent-500">This is a cool button!!</Button>
     </Router>
   </section>
   <Footer />
