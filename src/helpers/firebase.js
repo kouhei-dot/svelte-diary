@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { userId } from "../store";
+import { userId, isError } from "../store";
 import Cookies from 'js-cookie';
 import { writable } from "svelte/store";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,6 +17,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+export const db = getFirestore();
 
 const provider = new GoogleAuthProvider();
 
@@ -48,6 +51,7 @@ export const googleSignOut = () => {
     Cookies.remove('uid');
     location.reload();
   }).catch((error) => {
+    isError.set(true);
     // An error happened.
   });
 };

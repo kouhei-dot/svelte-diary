@@ -4,6 +4,7 @@
   import { userId } from '../store';
   import NoticeDialog from './NoticeDialog.svelte';
   import ErrorDialog from './ErrorDialog.svelte';
+  import { postDiary } from '../helpers/api';
 
   let rate = 5;
   let body = '';
@@ -23,6 +24,19 @@
       isError = true;
       return false;
     }
+    const result = await postDiary(uid, rate, body);
+    if (result) {
+      msg = '日記を追加しました。';
+      isShowDialog = true;
+    } else {
+      msg = '日記の追加に失敗しました。';
+      isError = true;
+    }
+  };
+
+  const onClickOk = () => {
+    isShowDialog = false
+    document.location.href = '/#';
   };
 </script>
 
@@ -33,5 +47,5 @@
   <TextField class="bg-white-900" bind:value={body} label="本文" outlined textarea rows="5"></TextField>
   <Button type="submit" color="accent" class="text-white-600">日記を保存</Button>
 </form>
-<NoticeDialog on:ok={() => isShowDialog = false} showDialog={isShowDialog} msg={msg} />
+<NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
 <ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />

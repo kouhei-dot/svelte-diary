@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from 'svelte';
   import 'smelte/src/tailwind.css';
   import { Route, Router } from 'svelte-routing';
   import Header from './components/Header.svelte'
@@ -7,7 +8,15 @@
   import Create from './components/Create.svelte';
   import Diary from './components/Diary.svelte';
   import About from './components/About.svelte';
+  import ErrorDialog from './components/ErrorDialog.svelte';
+  import { isError } from './store';
   import './helpers/firebase';
+
+  let _isError = false;
+  const unsubscribe = isError.subscribe((isError) => {
+    _isError = isError;
+  });
+  onDestroy(() => unsubscribe);
 
 	export let url;
 </script>
@@ -26,6 +35,8 @@
   </section>
   <Footer />
 </main>
+
+<ErrorDialog on:ok={() => isError.set(false)} isError={_isError} />
 
 <style>
 	main {

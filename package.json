@@ -20,6 +20,7 @@
   "dependencies": {
     "@rollup/plugin-replace": "^4.0.0",
     "carbon-icons-svelte": "^10.45.0",
+    "dayjs": "^1.11.0",
     "dotenv": "^16.0.0",
     "firebase": "^9.6.9",
     "js-cookie": "^3.0.1",
