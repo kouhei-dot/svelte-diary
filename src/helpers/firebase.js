@@ -31,7 +31,7 @@ export const googleSignIn = () => {
     // The signed-in user info.
     userId.set(result.user.uid);
     Cookies.set('uid', result.user.uid);
-    // ...
+    location.reload();
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;

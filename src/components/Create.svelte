@@ -45,7 +45,7 @@
   <span>今日の気分は{rate}点</span>
   <Slider class="my-6" bind:value={rate} min="1" max="10"></Slider>
   <TextField class="bg-white-900" bind:value={body} label="本文" outlined textarea rows="5"></TextField>
-  <Button type="submit" color="accent" class="text-white-600">日記を保存</Button>
+  <Button type="submit" color="accent">日記を保存</Button>
 </form>
 <NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
 <ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />
