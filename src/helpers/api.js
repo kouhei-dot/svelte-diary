@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, updateDoc } from "firebase/firestore";
 import { isError } from "../store";
 import { db } from "./firebase";
 
@@ -39,5 +39,20 @@ export const postDiary = async (uid = '', rate = 0, body = '') => {
     return !!docRef.id
   } catch (e) {
     isError.set(true);
+  }
+};
+
+export const updateDiary = async (id = '', body = '', rate = 0, image = '') => {
+  const docRef = doc(db, 'diaries', id);
+  if (!docRef) return false;
+  try {
+    await updateDoc(docRef, {
+      body: body,
+      rate: rate,
+      image: image,
+    });
+    return true;
+  } catch(e) {
+    return false;
   }
 };
