@@ -25,7 +25,9 @@
   <Header />
   <section class="content">
     <Router url="{url}">
-      <Route path="diary/:id" component="{Diary}" />
+      <Route path="diary/:id" let:params>
+        <Diary id={params.id}/>
+      </Route>
       <Route path="create" component="{Create}" />
       <Route path="about" component="{About}" />
       <Route path="/">
