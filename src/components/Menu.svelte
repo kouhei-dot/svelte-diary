@@ -4,7 +4,7 @@
   import { Router, Link } from 'svelte-routing';
   import { userId } from '../store';
   import { googleSignIn, googleSignOut } from '../helpers/firebase';
-import { onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
 
   export let open;
 

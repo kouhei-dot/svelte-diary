@@ -16,7 +16,7 @@
   };
 
   const unsubscribe = userId.subscribe(id => uid = id);
-  onMount( async () => {
+  onMount(async () => {
     diaries = await getDiaries(uid);
   });
   onDestroy(() => unsubscribe);
