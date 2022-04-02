@@ -29,7 +29,7 @@ export const getDiary = async (id = 'dummy') => {
 };
 
 export const postDiary = async (uid = '', rate = 0, body = '', image = null) => {
-  const uploadResult = image ? await uploadImage(image) : '';
+  const uploadResult = image.name ? await uploadImage(image) : '';
   try {
     const docRef = await addDoc(collection(db, "diaries"), {
       uid: uid,
@@ -40,18 +40,23 @@ export const postDiary = async (uid = '', rate = 0, body = '', image = null) => 
     });
     return !!docRef.id
   } catch (e) {
-    isError.set(true);
+    return false;
   }
 };
 
-export const updateDiary = async (id = '', body = '', rate = 0, image = '') => {
+export const updateDiary = async (id = '', diary = null, image = '') => {
   const docRef = doc(db, 'diaries', id);
   if (!docRef) return false;
+  if (image.name) {
+    const path = findRef(diary.image);
+    const result = await uploadImage(image, path);
+    if (!diary.image) diary.image = result;
+  }
   try {
     await updateDoc(docRef, {
-      body: body,
-      rate: rate,
-      image: image,
+      body: diary.body,
+      rate: diary.rate,
+      image: diary.image,
     });
     return true;
   } catch(e) {
@@ -59,20 +64,32 @@ export const updateDiary = async (id = '', body = '', rate = 0, image = '') => {
   }
 };
 
-const uploadImage = async (image = null) => {
+const uploadImage = async (image = null, path = '') => {
   try {
-    const storageRef = ref(storage);
-    const ext = image.name.split('.').pop();
-    const hashName = Math.random().toString(36).slice(-8);
-    const uploadRef = ref(storageRef, `images/${hashName}.${ext}`);
-    const uploadResult = await uploadBytes(uploadRef, image);
-    if (uploadResult) {
-      const url = await getDownloadURL(uploadRef);
-      return url;
+    if (!path) {
+      const storageRef = ref(storage);
+      const ext = image.name.split('.').pop();
+      const hashName = Math.random().toString(36).slice(-8);
+      const uploadRef = ref(storageRef, `images/${hashName}.${ext}`);
+      const uploadResult = await uploadBytes(uploadRef, image);
+      if (uploadResult) {
+        const url = await getDownloadURL(uploadRef);
+        return url;
+      } else {
+        return '';
+      }
     } else {
+      const uploadRef = ref(ref(storage), path);
+      await uploadBytes(uploadRef, image);
       return '';
     }
   } catch(e) {
     isError.set(true);
   }
+};
+
+const findRef = (imageUrl = '') => {
+  if (!imageUrl) return '';
+  const url = imageUrl.split('/')[7].split('?')[0];
+  return url.replace('%2F', '/');
 };
