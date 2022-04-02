@@ -69,10 +69,24 @@
     >
       画像を選択
     </label>
-    <input type="file" id="image" hidden accept="/image/*" bind:this={image} on:change={onfileSelect} />
+    <input
+      type="file"
+      id="image"
+      hidden
+      accept="/image/*"
+      bind:this={image}
+      on:change={onfileSelect}
+    />
     <div class="mt-4">気分は{diary.rate}点</div>
-    <Slider class="my-4" bind:value={diary.rate} min="1" max="10"></Slider>
-    <TextField class="bg-white-900" bind:value={diary.body} label="本文" outlined textarea rows="5"></TextField>
+    <Slider class="my-4" bind:value={diary.rate} min="1" max="10"/>
+    <TextField
+      class="bg-white-900"
+      bind:value={diary.body}
+      label="本文"
+      outlined
+      textarea
+      rows="5"
+    />
     <Button class="mb-4" type="submit" color="accent">日記を更新</Button>
   </form>
 {/await}

@@ -55,8 +55,15 @@
 <h3>日記を書こう！</h3>
 <form on:submit|preventDefault="{submit}">
   <span>今日の気分は{rate}点</span>
-  <Slider class="my-6" bind:value={rate} min="1" max="10"></Slider>
-  <TextField class="bg-white-900" bind:value={body} label="本文" outlined textarea rows="5"></TextField>
+  <Slider class="my-6" bind:value={rate} min="1" max="10"/>
+  <TextField
+    class="bg-white-900"
+    bind:value={body}
+    label="本文"
+    outlined
+    textarea
+    rows="5"
+  />
   {#if imgPreview}
     <div class="flex justify-center">
       <img src={imgPreview} alt="preview" />
@@ -70,7 +77,14 @@
     >
       画像を選択
     </label>
-    <input type="file" id="image" hidden accept="/image/*" bind:this={image} on:change={onfileSelect} />
+    <input
+      type="file"
+      id="image"
+      hidden
+      accept="/image/*"
+      bind:this={image}
+      on:change={onfileSelect}
+    />
   </div>
   <Button class="mb-4" type="submit" color="accent">日記を保存</Button>
 </form>
