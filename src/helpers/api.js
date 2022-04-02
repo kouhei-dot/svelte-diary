@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, updateDoc } from "firebase/firestore";
 import { isError } from "../store";
-import { db } from "./firebase";
+import { db, storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export const getDiaries = async (uid = '') => {
   try {
@@ -27,12 +28,13 @@ export const getDiary = async (id = 'dummy') => {
   return result.exists() ? result.data() : false;
 };
 
-export const postDiary = async (uid = '', rate = 0, body = '') => {
+export const postDiary = async (uid = '', rate = 0, body = '', image = null) => {
+  const uploadResult = image ? await uploadImage(image) : '';
   try {
     const docRef = await addDoc(collection(db, "diaries"), {
       uid: uid,
       body: body,
-      image: '',
+      image: uploadResult,
       rate: rate,
       createdAt: dayjs().format('YYYY/MM/DD HH:mm:ss'),
     });
@@ -54,5 +56,23 @@ export const updateDiary = async (id = '', body = '', rate = 0, image = '') => {
     return true;
   } catch(e) {
     return false;
+  }
+};
+
+const uploadImage = async (image = null) => {
+  try {
+    const storageRef = ref(storage);
+    const ext = image.name.split('.').pop();
+    const hashName = Math.random().toString(36).slice(-8);
+    const uploadRef = ref(storageRef, `images/${hashName}.${ext}`);
+    const uploadResult = await uploadBytes(uploadRef, image);
+    if (uploadResult) {
+      const url = await getDownloadURL(uploadRef);
+      return url;
+    } else {
+      return '';
+    }
+  } catch(e) {
+    isError.set(true);
   }
 };

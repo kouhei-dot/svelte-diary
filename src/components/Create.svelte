@@ -11,6 +11,8 @@
   let isShowDialog = false;
   let msg = '';
   let isError = false;
+  let image = '';
+  let imgPreview = '';
 
   let uid = null;
   const unsubscribe = userId.subscribe((id) => {
@@ -24,7 +26,7 @@
       isError = true;
       return false;
     }
-    const result = await postDiary(uid, rate, body);
+    const result = await postDiary(uid, rate, body, image);
     if (result) {
       msg = '日記を追加しました。';
       isShowDialog = true;
@@ -32,6 +34,16 @@
       msg = '日記の追加に失敗しました。';
       isError = true;
     }
+  };
+
+  const onfileSelect = (e) => {
+    const target = e.target.files[0];
+    image = target;
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(target);
+    fileReader.onload = (e) => {
+      imgPreview = e.target.result;
+    };
   };
 
   const onClickOk = () => {
@@ -45,7 +57,22 @@
   <span>今日の気分は{rate}点</span>
   <Slider class="my-6" bind:value={rate} min="1" max="10"></Slider>
   <TextField class="bg-white-900" bind:value={body} label="本文" outlined textarea rows="5"></TextField>
-  <Button type="submit" color="accent">日記を保存</Button>
+  {#if imgPreview}
+    <div class="flex justify-center">
+      <img src={imgPreview} alt="preview" />
+    </div>
+  {/if}
+  <div class="my-6">
+    <label
+      class="bg-primary-500 px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500"
+      role="button"
+      for="image"
+    >
+      画像を選択
+    </label>
+    <input type="file" id="image" hidden accept="/image/*" bind:this={image} on:change={onfileSelect} />
+  </div>
+  <Button class="mb-4" type="submit" color="accent">日記を保存</Button>
 </form>
 <NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
 <ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />
