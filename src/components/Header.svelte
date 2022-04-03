@@ -1,18 +1,12 @@
 <script>
   import Hamburger from 'svelte-hamburgers';
+  import 'svelte-hamburgers/dist/css/base.css';
+  import 'svelte-hamburgers/dist/css/types/spin.css';
   import BrightnessContrast32 from "carbon-icons-svelte/lib/BrightnessContrast32/BrightnessContrast32.svelte";
   import Menu from './Menu.svelte';
 
   let open
 </script>
-
-<svelte:head>
-	<!-- Import base css -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-hamburgers@3/dist/css/base.css" />
-
-	<!-- Import spin css (spin is default type) -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-hamburgers@3/dist/css/types/spin.css" />
-</svelte:head>
 
 <header class="bg-primary-900 flex justify-between items-center">
   <Hamburger bind:open --color="white" />
