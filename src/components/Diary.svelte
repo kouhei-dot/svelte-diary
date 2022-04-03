@@ -1,10 +1,11 @@
 <script>
   import { onMount } from 'svelte';
   import { ProgressLinear, Slider, TextField, Button } from 'smelte';
-  import { getDiary, updateDiary } from '../helpers/api';
+  import { getDiary, updateDiary, deleteDiary } from '../helpers/api';
   import dayjs from 'dayjs';
   import NoticeDialog from './NoticeDialog.svelte';
   import ErrorDialog from './ErrorDialog.svelte';
+  import ConfirmDialog from './ConfirmDialog.svelte';
 
   export let id;
   let diary = getDiary();
@@ -12,6 +13,7 @@
   let msg = '';
   let isError = false;
   let image, imgPreview;
+  let isShowConfirm = false;
 
   onMount(async () => {
     diary = await getDiary(id);
@@ -46,6 +48,23 @@
   const onClickOk = () => {
     isShowDialog = false
     document.location.href = '/#';
+  };
+
+  const execDelete = async () => {
+    isShowConfirm = false;
+    const result = await deleteDiary(id);
+    if (result) {
+      msg = '日記を削除しました。';
+      isShowDialog = true;
+    } else {
+      msg = '日記を削除に失敗しました。';
+      isError = true;
+    }
+  };
+
+  const showConfirm = () => {
+    msg = '日記を削除します。よろしいですか？';
+    isShowConfirm = true;
   };
 </script>
 
@@ -87,8 +106,17 @@
       textarea
       rows="5"
     />
-    <Button class="mb-4" type="submit" color="accent">日記を更新</Button>
+    <div class="mb-4 flex justify-center">
+      <Button class="mx-2" type="submit" color="accent">日記を更新</Button>
+      <Button class="mx-2" color="secondary" on:click={showConfirm}>日記を削除</Button>
+    </div>
   </form>
 {/await}
 <NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
 <ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />
+<ConfirmDialog
+  msg={msg}
+  isShow={isShowConfirm}
+  on:ok={execDelete}
+  on:cancel={() => isShowConfirm = false}
+/>

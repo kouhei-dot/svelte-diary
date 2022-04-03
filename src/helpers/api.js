@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { isError } from "../store";
 import { db, storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -86,6 +86,13 @@ const uploadImage = async (image = null, path = '') => {
   } catch(e) {
     isError.set(true);
   }
+};
+
+export const deleteDiary = async (id = '') => {
+  if (!id) return false;
+  const ref = doc(db, 'diaries', id);
+  await deleteDoc(ref);
+  return true;
 };
 
 const findRef = (imageUrl = '') => {
