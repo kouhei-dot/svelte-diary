@@ -106,7 +106,7 @@
       textarea
       rows="5"
     />
-    <div class="mb-4 flex justify-center">
+    <div class="flex justify-center">
       <Button class="mx-2" type="submit" color="accent">日記を更新</Button>
       <Button class="mx-2" color="secondary" on:click={showConfirm}>日記を削除</Button>
     </div>
