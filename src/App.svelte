@@ -21,9 +21,9 @@
 	export let url;
 </script>
 
-<main class="bg-background-700">
+<main class="bg-background-700 text-center my-0 mx-auto">
   <Header />
-  <section class="content">
+  <section class="content p-6">
     <Router url="{url}">
       <Route path="diary/:id" let:params>
         <Diary id={params.id}/>
@@ -42,10 +42,7 @@
 
 <style>
 	main {
-		text-align: center;
-		padding: 1em;
 		max-width: 640px;
-		margin: 0 auto;
 	}
   .content {
     min-height: calc( 100vh - 60px - 60px );

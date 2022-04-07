@@ -86,7 +86,7 @@
       on:change={onfileSelect}
     />
   </div>
-  <Button class="mb-4" type="submit" color="accent">日記を保存</Button>
+  <Button class="mt-6" type="submit" color="accent">日記を保存</Button>
 </form>
 <NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
 <ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />

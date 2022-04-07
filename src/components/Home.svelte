@@ -35,9 +35,9 @@
             <img class="h-2/5 w-2/5" src={diary.image || '/dummy.jpeg'} alt="diary" />
             <StarRating rating={diary.rate / 2} config={starConfig} />
           </div>
-          <div class="mb-4">{diary.body}</div>
-          <hr />
+          <div>{diary.body}</div>
         </Link>
+        <div class="my-4 border-b-2 border-gray-300"></div>
       {/each}
     </Router>
   {/await}
