@@ -21,7 +21,7 @@
 	export let url;
 </script>
 
-<main class="bg-background-700 text-center my-0 mx-auto">
+<main class="bg-background-700 dark:bg-dark-400 text-center my-0 mx-auto">
   <Header />
   <section class="content p-6">
     <Router url="{url}">

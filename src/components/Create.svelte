@@ -52,7 +52,7 @@
   <span>今日の気分は{rate}点</span>
   <Slider class="my-6" bind:value={rate} min="1" max="10"/>
   <TextField
-    class="bg-white-900"
+    class="bg-white-900 dark:bg-dark-500"
     bind:value={body}
     label="本文"
     outlined
@@ -66,7 +66,7 @@
   {/if}
   <div class="my-6">
     <label
-      class="bg-primary-500 px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500"
+      class="bg-primary-500 dark:text-black px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500"
       role="button"
       for="image"
     >
@@ -81,7 +81,7 @@
       on:change={onfileSelect}
     />
   </div>
-  <Button class="mt-6" type="submit" color="accent">日記を保存</Button>
+  <Button class="mt-6 dark:text-black" type="submit" color="accent">日記を保存</Button>
 </form>
 <NoticeDialog
   on:ok={() => document.location.href = '/#'}
