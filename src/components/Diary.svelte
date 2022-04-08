@@ -45,11 +45,6 @@
     };
   };
 
-  const onClickOk = () => {
-    isShowDialog = false
-    document.location.href = '/#';
-  };
-
   const execDelete = async () => {
     isShowConfirm = false;
     const result = await deleteDiary(id);
@@ -112,11 +107,15 @@
     </div>
   </form>
 {/await}
-<NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
-<ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />
+<NoticeDialog
+  on:ok={() => document.location.href = '/#'}
+  bind:showDialog={isShowDialog}
+  msg={msg}
+/>
+<ErrorDialog bind:isError={isError} msg={msg} />
 <ConfirmDialog
   msg={msg}
-  isShow={isShowConfirm}
+  bind:isShow={isShowConfirm}
   on:ok={execDelete}
-  on:cancel={() => isShowConfirm = false}
 />
+
