@@ -45,11 +45,6 @@
       imgPreview = e.target.result;
     };
   };
-
-  const onClickOk = () => {
-    isShowDialog = false
-    document.location.href = '/#';
-  };
 </script>
 
 <h3>日記を書こう！</h3>
@@ -88,5 +83,9 @@
   </div>
   <Button class="mt-6" type="submit" color="accent">日記を保存</Button>
 </form>
-<NoticeDialog on:ok={onClickOk} showDialog={isShowDialog} msg={msg} />
-<ErrorDialog on:ok={() => isError = false} isError={isError} msg={msg} />
+<NoticeDialog
+  on:ok={() => document.location.href = '/#'}
+  bind:showDialog={isShowDialog}
+  msg={msg}
+/>
+<ErrorDialog bind:isError={isError} msg={msg} />

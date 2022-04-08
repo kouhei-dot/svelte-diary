@@ -15,7 +15,13 @@
 <Dialog persistent class="bg-white-900" bind:value={isError}>
   <h5 slot="title">エラー</h5>
   <div class="text-gray-700">{msg}</div>
-  <div slot="actions">
+  <div slot="actions" class="flex justify-end">
     <Button on:click={onClickOk}>OK</Button>
   </div>
 </Dialog>
+
+<style>
+  div {
+    min-width: 200px;
+  }
+</style>
