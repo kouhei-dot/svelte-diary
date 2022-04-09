@@ -14,8 +14,8 @@
 
 <Dialog persistent class="bg-white-900" bind:value={showDialog}>
   <h5 slot="title">完了</h5>
-  <div class="text-gray-700">{msg}</div>
-  <div slot="actions" class="flex justify-end">
+  <div class="text-gray-700 dark:text-gray-100">{msg}</div>
+  <div slot="actions" class="flex justify-end dark:text-black">
     <Button on:click={onClickOk}>OK</Button>
   </div>
 </Dialog>

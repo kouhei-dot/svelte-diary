@@ -77,7 +77,7 @@
       {/if}
     </div>
     <label
-      class="bg-primary-500 px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500"
+      class="bg-primary-500 px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500 dark:text-black"
       role="button"
       for="image"
     >
@@ -94,14 +94,14 @@
     <div class="mt-4">気分は{diary.rate}点</div>
     <Slider class="my-4" bind:value={diary.rate} min="1" max="10"/>
     <TextField
-      class="bg-white-900"
+      class="bg-white-900 dark:bg-dark-500"
       bind:value={diary.body}
       label="本文"
       outlined
       textarea
       rows="5"
     />
-    <div class="flex justify-center">
+    <div class="flex justify-center dark:text-black">
       <Button class="mx-2" type="submit" color="accent">日記を更新</Button>
       <Button class="mx-2" color="secondary" on:click={showConfirm}>日記を削除</Button>
     </div>

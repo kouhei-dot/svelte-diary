@@ -14,8 +14,8 @@
 
 <Dialog persistent class="bg-white-900" bind:value={isShow}>
   <h5 slot="title">確認</h5>
-  <div class="text-gray-700">{msg}</div>
-  <div slot="actions">
+  <div class="text-gray-700 dark:text-gray-100">{msg}</div>
+  <div slot="actions" class="dark:text-black">
     <Button on:click={() => isShow = false} color="secondary">キャンセル</Button>
     <Button on:click={onClickOk}>OK</Button>
   </div>
