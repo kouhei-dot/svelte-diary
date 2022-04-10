@@ -28,8 +28,12 @@
       <Route path="diary/:id" let:params>
         <Diary id={params.id}/>
       </Route>
-      <Route path="create" component="{Create}" />
-      <Route path="about" component="{About}" />
+      <Route path="create">
+        <Create />
+      </Route>
+      <Route path="about">
+        <About />
+      </Route>
       <Route path="/">
         <Home />
       </Route>
