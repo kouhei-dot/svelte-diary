@@ -77,8 +77,7 @@
       {/if}
     </div>
     <label
-      class="bg-primary-500 px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500 dark:text-black"
-      role="button"
+      class="bg-primary-700 hover:bg-primary-400 px-5 py-3 rounded duration-500 dark:text-black cursor-pointer"
       for="image"
     >
       画像を選択

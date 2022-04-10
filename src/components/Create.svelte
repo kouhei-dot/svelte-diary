@@ -66,8 +66,7 @@
   {/if}
   <div class="my-6">
     <label
-      class="bg-primary-500 dark:text-black px-5 py-3 rounded hover:shadow-lg transition-shadow duration-500"
-      role="button"
+      class="bg-primary-700 hover:bg-primary-400 dark:text-black px-5 py-3 rounded duration-500 cursor-pointer"
       for="image"
     >
       画像を選択
